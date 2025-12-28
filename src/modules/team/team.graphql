@@ -1,0 +1,51 @@
+# Team Module Schema
+
+type TeamMember {
+  _id: ID!
+  name: String!
+  position: String!
+  bio: String
+  avatar: String!
+  email: String
+  phone: String
+  socialLinks: SocialLinks
+  skills: [String!]!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateTeamMemberInput {
+  name: String!
+  position: String!
+  bio: String
+  avatar: String!
+  email: String
+  phone: String
+  socialLinks: SocialLinksInput
+  skills: [String!]
+  isActive: Boolean
+}
+
+input UpdateTeamMemberInput {
+  name: String
+  position: String
+  bio: String
+  avatar: String
+  email: String
+  phone: String
+  socialLinks: SocialLinksInput
+  skills: [String!]
+  isActive: Boolean
+}
+
+extend type Query {
+  teamMembers(isActive: Boolean): [TeamMember!]!
+  teamMember(id: ID!): TeamMember!
+}
+
+extend type Mutation {
+  createTeamMember(input: CreateTeamMemberInput!): TeamMember!
+  updateTeamMember(id: ID!, input: UpdateTeamMemberInput!): TeamMember!
+  removeTeamMember(id: ID!): Boolean!
+}

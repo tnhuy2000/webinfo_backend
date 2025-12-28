@@ -1,0 +1,51 @@
+# Contact Module Schema
+
+type ContactMessage {
+  _id: ID!
+  name: String!
+  email: String!
+  phone: String
+  subject: String!
+  message: String!
+  isRead: Boolean!
+  createdAt: DateTime!
+}
+
+type ContactInfo {
+  _id: ID!
+  email: String!
+  phone: String!
+  address: String!
+  workingHours: String
+  socialLinks: SocialLinks
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateContactMessageInput {
+  name: String!
+  email: String!
+  phone: String
+  subject: String!
+  message: String!
+}
+
+input UpdateContactInfoInput {
+  email: String
+  phone: String
+  address: String
+  workingHours: String
+  socialLinks: SocialLinksInput
+}
+
+extend type Query {
+  contactMessages: [ContactMessage!]!
+  contactMessage(id: ID!): ContactMessage!
+  contactInfo: ContactInfo!
+}
+
+extend type Mutation {
+  createContactMessage(input: CreateContactMessageInput!): ContactMessage!
+  markAsRead(id: ID!): ContactMessage!
+  updateContactInfo(input: UpdateContactInfoInput!): ContactInfo!
+}

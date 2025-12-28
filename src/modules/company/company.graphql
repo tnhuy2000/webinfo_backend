@@ -1,0 +1,61 @@
+# Company Module Schema
+
+type Address {
+  street: String!
+  city: String!
+  country: String!
+  zipCode: String
+}
+
+type Company {
+  _id: ID!
+  name: String!
+  description: String!
+  mission: String
+  vision: String
+  founded: String
+  employees: Int
+  address: Address
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: Float
+  deletedBy: String
+}
+
+input AddressInput {
+  street: String!
+  city: String!
+  country: String!
+  zipCode: String
+}
+
+input CreateCompanyInput {
+  name: String!
+  description: String!
+  mission: String
+  vision: String
+  founded: String
+  employees: Int
+  address: AddressInput
+}
+
+input UpdateCompanyInput {
+  name: String
+  description: String
+  mission: String
+  vision: String
+  founded: String
+  employees: Int
+  address: AddressInput
+}
+
+extend type Query {
+  companies: [Company!]!
+  company(id: ID!): Company!
+}
+
+extend type Mutation {
+  createCompany(input: CreateCompanyInput!): Company!
+  updateCompany(id: ID!, input: UpdateCompanyInput!): Company!
+  removeCompany(id: ID!): Boolean!
+}

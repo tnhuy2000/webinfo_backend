@@ -1,0 +1,14 @@
+# Common Types
+type SocialLinks {
+  linkedin: String
+  twitter: String
+  github: String
+  facebook: String
+}
+
+input SocialLinksInput {
+  linkedin: String
+  twitter: String
+  github: String
+  facebook: String
+}

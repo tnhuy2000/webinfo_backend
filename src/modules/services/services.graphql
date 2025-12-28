@@ -1,0 +1,42 @@
+# Services Module Schema
+
+type Service {
+  _id: ID!
+  title: String!
+  description: String!
+  icon: String
+  features: [String!]!
+  price: String
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateServiceInput {
+  title: String!
+  description: String!
+  icon: String
+  features: [String!]
+  price: String
+  isActive: Boolean
+}
+
+input UpdateServiceInput {
+  title: String
+  description: String
+  icon: String
+  features: [String!]
+  price: String
+  isActive: Boolean
+}
+
+extend type Query {
+  services(isActive: Boolean): [Service!]!
+  service(id: ID!): Service!
+}
+
+extend type Mutation {
+  createService(input: CreateServiceInput!): Service!
+  updateService(id: ID!, input: UpdateServiceInput!): Service!
+  removeService(id: ID!): Boolean!
+}
