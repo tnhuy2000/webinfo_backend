@@ -1,0 +1,59 @@
+# Settings Module Schema
+
+enum SettingCategory {
+  GENERAL
+  SEO
+  SOCIAL
+  THEME
+  EMAIL
+  ADVANCED
+}
+
+type Setting {
+  _id: ID!
+  key: String!
+  value: JSON!
+  category: SettingCategory!
+  description: String
+  type: String!
+  isPublic: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateSettingInput {
+  key: String!
+  value: JSON!
+  category: SettingCategory
+  description: String
+  type: String
+  isPublic: Boolean
+}
+
+input UpdateSettingInput {
+  value: JSON
+  category: SettingCategory
+  description: String
+  type: String
+  isPublic: Boolean
+}
+
+input BulkSettingInput {
+  key: String!
+  value: JSON!
+}
+
+extend type Query {
+  settings(category: SettingCategory): [Setting!]!
+  setting(key: String!): Setting!
+  publicSettings: JSON!
+  allSettingsAsObject: JSON!
+}
+
+extend type Mutation {
+  createSetting(input: CreateSettingInput!): Setting!
+  updateSetting(key: String!, input: UpdateSettingInput!): Setting!
+  bulkUpdateSettings(settings: [BulkSettingInput!]!): Int!
+  deleteSetting(key: String!): Boolean!
+  initializeDefaultSettings: Boolean!
+}

@@ -4,6 +4,7 @@ import { join } from 'path';
 export const graphqlConfig: ApolloDriverConfig = {
   // Schema First: Load all .graphql files from modules
   typePaths: [
+    join(process.cwd(), 'src/common/**/*.graphql'),
     join(process.cwd(), 'src/graphql/**/*.graphql'),
     join(process.cwd(), 'src/modules/**/*.graphql'),
   ],

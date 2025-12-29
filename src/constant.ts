@@ -4,6 +4,9 @@ export const DATABASE_COLLECTION_NAME = {
   TEAM_MEMBERS: 'team_members',
   CONTACT_INFO: 'contact_info',
   CONTACT_MESSAGES: 'contact_messages',
+  USERS: 'users',
+  CONTENTS: 'contents',
+  SETTINGS: 'settings',
 } as const;
 
 export const ID_TYPE = {

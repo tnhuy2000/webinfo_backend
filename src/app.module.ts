@@ -9,7 +9,12 @@ import { CompanyModule } from './modules/company/company.module';
 import { ServicesModule } from './modules/services/services.module';
 import { TeamModule } from './modules/team/team.module';
 import { ContactModule } from './modules/contact/contact.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { ContentModule } from './modules/content/content.module';
+import { SettingsModule } from './modules/settings/settings.module';
 import { DateScalar } from './common/scalars/date.scalar';
+import { JSONScalar } from './common/scalars/json.scalar';
 import { graphqlConfig } from './config/graphql.config';
 import databaseConfig from './config/database.config';
 
@@ -31,13 +36,21 @@ import databaseConfig from './config/database.config';
     // Database Module
     DatabaseModule,
 
-    // Feature Modules
+    // REST API Modules
+    AuthModule,      // JWT Authentication
+
+    // CMS Modules (GraphQL - Schema First)
+    UsersModule,
+    ContentModule,
+    SettingsModule,
+
+    // Public Website Modules (GraphQL - Schema First)
     CompanyModule,
     ServicesModule,
     TeamModule,
     ContactModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DateScalar],
+  providers: [AppService, DateScalar, JSONScalar],
 })
 export class AppModule {}

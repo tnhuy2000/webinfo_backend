@@ -1,0 +1,38 @@
+# Users Module Schema
+
+type User {
+  _id: ID!
+  email: String!
+  name: String!
+  role: String!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  name: String!
+  role: String
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  name: String
+  role: String
+  isActive: Boolean
+}
+
+extend type Query {
+  users: [User!]!
+  user(id: ID!): User!
+  me: User!
+}
+
+extend type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): Boolean!
+}
