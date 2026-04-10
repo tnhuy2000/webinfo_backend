@@ -2,11 +2,12 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Setting, SettingDocument, SettingCategory } from './schemas/setting.schema';
-import { CreateSettingInput, UpdateSettingInput } from 'src/graphql.schema';
+import { Setting, SettingDocument } from './schemas/setting.schema';
+import { CreateSettingInput, SettingCategory, UpdateSettingInput } from 'src/graphql.schema';
 
 @Injectable()
 export class SettingsService {
@@ -29,7 +30,7 @@ export class SettingsService {
 
   async findAll(category?: SettingCategory): Promise<SettingDocument[]> {
     const filter = category ? { category } : {};
-    return this.settingModel.find(filter).exec();
+    return this.settingModel.find(filter).sort({ isDefault: 1}).exec();
   }
 
   async findByKey(key: string): Promise<SettingDocument> {
@@ -40,18 +41,13 @@ export class SettingsService {
     return setting;
   }
 
-  async findPublicSettings(): Promise<Record<string, any>> {
+  async findPublicSettings(): Promise<SettingDocument[]> {
     const settings = await this.settingModel
       .find({ isPublic: true })
       .exec();
-
-    const settingsObject: Record<string, any> = {};
-    settings.forEach((setting) => {
-      settingsObject[setting.key] = setting.value;
-    });
-
-    return settingsObject;
+    return settings;
   }
+
 
   async getAllAsObject(): Promise<Record<string, any>> {
     const settings = await this.settingModel.find().exec();
@@ -66,15 +62,44 @@ export class SettingsService {
     key: string,
     updateSettingDto: UpdateSettingInput,
   ): Promise<SettingDocument> {
+    // Check if setting exists and is default
+    const existingSetting = await this.settingModel.findOne({ key }).exec();
+
+    if (!existingSetting) {
+      throw new NotFoundException('Setting not found');
+    }
+
+    // If setting is default, only allow updating the value
+    if (existingSetting.isDefault) {
+      // Check if trying to update fields other than value
+      const forbiddenFields = Object.keys(updateSettingDto).filter(
+        field => field !== 'value'
+      );
+
+      if (forbiddenFields.length > 0) {
+        throw new BadRequestException(
+          `Cannot modify ${forbiddenFields.join(', ')} of default system settings. Only 'value' can be updated.`
+        );
+      }
+
+      // Only update value
+      const setting = await this.settingModel
+        .findOneAndUpdate(
+          { key },
+          { value: updateSettingDto.value },
+          { new: true }
+        )
+        .exec();
+
+      return setting!;
+    }
+
+    // For non-default settings, allow full update
     const setting = await this.settingModel
       .findOneAndUpdate({ key }, updateSettingDto, { new: true })
       .exec();
 
-    if (!setting) {
-      throw new NotFoundException('Setting not found');
-    }
-
-    return setting;
+    return setting!;
   }
 
   async bulkUpdate(
@@ -95,45 +120,83 @@ export class SettingsService {
   }
 
   async delete(key: string): Promise<void> {
-    const result = await this.settingModel.findOneAndDelete({ key }).exec();
-    if (!result) {
+    // Check if setting exists and is not a default setting
+    const setting = await this.settingModel.findOne({ key }).exec();
+    if (!setting) {
       throw new NotFoundException('Setting not found');
     }
+
+    if (setting.isDefault) {
+      throw new BadRequestException('Cannot delete default system settings');
+    }
+
+    await this.settingModel.findOneAndDelete({ key }).exec();
   }
 
   async initializeDefaults(): Promise<void> {
     const defaults = [
       {
-        key: 'site_name',
+        key: 'ADMIN_LOGO',
+        value: '', // Empty initially, admin can upload
+        category: SettingCategory.GENERAL,
+        description: 'Admin panel logo',
+        type: 'IMAGE',
+        isPublic: false,
+        isDefault: true,
+      },
+      {
+        key: 'SITE_NAME',
         value: 'My Admin CMS',
         category: SettingCategory.GENERAL,
         description: 'Website name',
-        type: 'text',
+        type: 'STRING',
         isPublic: true,
+        isDefault: true,
       },
       {
-        key: 'site_description',
+        key: 'SITE_LOGO',
+        value: '',
+        category: SettingCategory.GENERAL,
+        description: 'Public website logo',
+        type: 'IMAGE',
+        isPublic: true,
+        isDefault: true,
+      },
+      {
+        key: 'SITE_DESCRIPTION',
         value: 'A powerful CMS built with NestJS',
-        category: SettingCategory.GENERAL,
-        description: 'Website description',
-        type: 'text',
+        category: SettingCategory.SEO,
+        description: 'Website meta description',
+        type: 'STRING',
         isPublic: true,
+        isDefault: true,
       },
       {
-        key: 'admin_email',
+        key: 'SEO_KEYWORDS',
+        value: 'cms, nestjs, admin',
+        category: SettingCategory.SEO,
+        description: 'SEO keywords',
+        type: 'STRING',
+        isPublic: true,
+        isDefault: true,
+      },
+      {
+        key: 'ADMIN_EMAIL',
         value: 'admin@example.com',
-        category: SettingCategory.GENERAL,
+        category: SettingCategory.CONTACT,
         description: 'Administrator email',
-        type: 'email',
+        type: 'STRING',
         isPublic: false,
+        isDefault: true,
       },
       {
-        key: 'items_per_page',
+        key: 'ITEMS_PER_PAGE',
         value: 10,
         category: SettingCategory.GENERAL,
         description: 'Number of items per page',
-        type: 'number',
+        type: 'NUMBER',
         isPublic: false,
+        isDefault: true,
       },
     ];
 

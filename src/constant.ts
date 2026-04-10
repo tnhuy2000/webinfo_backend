@@ -7,6 +7,15 @@ export const DATABASE_COLLECTION_NAME = {
   USERS: 'users',
   CONTENTS: 'contents',
   SETTINGS: 'settings',
+  // Portfolio collections
+  NAVIGATIONS: 'navigations',
+  SOCIAL_LINKS: 'social_links',
+  SKILLS: 'skills',
+  SKILL_ITEMS: 'skill_items',
+  WORK_EXPERIENCES: 'work_experiences',
+  TAGS: 'tags',
+  PROJECTS: 'projects',
+  ARTICLES: 'articles',
 } as const;
 
 export const ID_TYPE = {

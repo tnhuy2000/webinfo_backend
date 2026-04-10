@@ -1,0 +1,105 @@
+# Project Module Schema
+
+enum ProjectStatus {
+  draft
+  published
+  archived
+}
+
+type ProjectLink {
+  type: String!
+  url: String!
+  label: String
+}
+
+type ProjectImage {
+  url: LinkDocument
+  alt: String
+  isFeatured: Boolean!
+  order: Int!
+}
+
+type Project {
+  _id: ID!
+  title: String!
+  slug: String!
+  description: String
+  content: String
+  excerpt: String
+  thumbnail: LinkDocument
+  images: [ProjectImage!]!
+  tags: [String!]!
+  technologies: [String!]!
+  links: [ProjectLink!]!
+  status: ProjectStatus!
+  startDate: DateTime
+  endDate: DateTime
+  isFeatured: Boolean!
+  order: Int!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ProjectLinkInput {
+  type: String!
+  url: String!
+  label: String
+}
+
+input ProjectImageInput {
+  url: LinkDocumentInput
+  alt: String
+  isFeatured: Boolean
+  order: Int
+}
+
+input CreateProjectInput {
+  title: String!
+  slug: String!
+  description: String
+  content: String
+  excerpt: String
+  thumbnail: LinkDocumentInput
+  images: [ProjectImageInput!]
+  tags: [String!]
+  technologies: [String!]
+  links: [ProjectLinkInput!]
+  status: ProjectStatus
+  startDate: DateTime
+  endDate: DateTime
+  isFeatured: Boolean
+  order: Int
+  isActive: Boolean
+}
+
+input UpdateProjectInput {
+  title: String
+  slug: String
+  description: String
+  content: String
+  excerpt: String
+  thumbnail: LinkDocumentInput
+  images: [ProjectImageInput!]
+  tags: [String!]
+  technologies: [String!]
+  links: [ProjectLinkInput!]
+  status: ProjectStatus
+  startDate: DateTime
+  endDate: DateTime
+  isFeatured: Boolean
+  order: Int
+  isActive: Boolean
+}
+
+extend type Query {
+  projects(isActive: Boolean, isFeatured: Boolean, status: ProjectStatus): [Project!]!
+  project(id: ID!): Project!
+  projectBySlug(slug: String!): Project!
+}
+
+extend type Mutation {
+  createProject(input: CreateProjectInput!): Project!
+  updateProject(id: ID!, input: UpdateProjectInput!): Project!
+  deleteProject(id: ID!): Boolean!
+}

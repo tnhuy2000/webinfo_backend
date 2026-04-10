@@ -19,7 +19,7 @@ export class SettingsResolver {
     return this.settingsService.findByKey(key);
   }
 
-  @Query('publicSettings')
+  @Query('getPublicSettings')
   async getPublicSettings() {
     return this.settingsService.findPublicSettings();
   }
@@ -57,7 +57,7 @@ export class SettingsResolver {
   }
 
   @Mutation('initializeDefaultSettings')
-  @UseGuards(GqlAuthGuard)
+  // @UseGuards(GqlAuthGuard)
   async initializeDefaultSettings() {
     await this.settingsService.initializeDefaults();
     return true;

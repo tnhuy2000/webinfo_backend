@@ -12,3 +12,20 @@ input SocialLinksInput {
   github: String
   facebook: String
 }
+
+type LinkDocument {
+  url: String
+  fileName: String
+  type: TypeDocument
+}
+
+input LinkDocumentInput {
+  url: String
+  fileName: String
+  type: TypeDocument
+}
+
+enum TypeDocument {
+  link
+  file
+}

@@ -1,0 +1,81 @@
+# Article Module Schema
+
+enum ArticleStatus {
+  draft
+  published
+  archived
+}
+
+type Article {
+  _id: ID!
+  title: String!
+  slug: String!
+  description: String
+  content: String
+  excerpt: String
+  thumbnail: LinkDocument
+  coverImage: LinkDocument
+  tags: [String!]!
+  categories: [String!]!
+  status: ArticleStatus!
+  publishedAt: DateTime
+  author: String
+  readingTime: Int!
+  views: Int!
+  isFeatured: Boolean!
+  order: Int!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateArticleInput {
+  title: String!
+  slug: String!
+  description: String
+  content: String
+  excerpt: String
+  thumbnail: LinkDocumentInput
+  coverImage: LinkDocumentInput
+  tags: [String!]
+  categories: [String!]
+  status: ArticleStatus
+  publishedAt: DateTime
+  author: String
+  readingTime: Int
+  isFeatured: Boolean
+  order: Int
+  isActive: Boolean
+}
+
+input UpdateArticleInput {
+  title: String
+  slug: String
+  description: String
+  content: String
+  excerpt: String
+  thumbnail: LinkDocumentInput
+  coverImage: LinkDocumentInput
+  tags: [String!]
+  categories: [String!]
+  status: ArticleStatus
+  publishedAt: DateTime
+  author: String
+  readingTime: Int
+  isFeatured: Boolean
+  order: Int
+  isActive: Boolean
+}
+
+extend type Query {
+  articles(isActive: Boolean, isFeatured: Boolean, status: ArticleStatus): [Article!]!
+  article(id: ID!): Article!
+  articleBySlug(slug: String!): Article!
+}
+
+extend type Mutation {
+  createArticle(input: CreateArticleInput!): Article!
+  updateArticle(id: ID!, input: UpdateArticleInput!): Article!
+  deleteArticle(id: ID!): Boolean!
+  incrementArticleViews(id: ID!): Article!
+}

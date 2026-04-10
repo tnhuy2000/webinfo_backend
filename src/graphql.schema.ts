@@ -8,6 +8,17 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum TypeDocument {
+    link = "link",
+    file = "file"
+}
+
+export enum ArticleStatus {
+    draft = "draft",
+    published = "published",
+    archived = "archived"
+}
+
 export enum ContentType {
     PAGE = "PAGE",
     POST = "POST",
@@ -22,13 +33,39 @@ export enum ContentStatus {
     ARCHIVED = "ARCHIVED"
 }
 
+export enum ProjectStatus {
+    draft = "draft",
+    published = "published",
+    archived = "archived"
+}
+
 export enum SettingCategory {
     GENERAL = "GENERAL",
     SEO = "SEO",
     SOCIAL = "SOCIAL",
     THEME = "THEME",
-    EMAIL = "EMAIL",
+    CONTACT = "CONTACT",
+    CONTENT = "CONTENT",
     ADVANCED = "ADVANCED"
+}
+
+export enum SkillVariant {
+    frontend = "frontend",
+    styles = "styles",
+    backend = "backend",
+    devops = "devops"
+}
+
+export enum SocialPlatform {
+    github = "github",
+    linkedin = "linkedin",
+    telegram = "telegram",
+    facebook = "facebook",
+    instagram = "instagram",
+    twitter = "twitter",
+    youtube = "youtube",
+    email = "email",
+    other = "other"
 }
 
 export class SocialLinksInput {
@@ -36,6 +73,50 @@ export class SocialLinksInput {
     twitter?: Nullable<string>;
     github?: Nullable<string>;
     facebook?: Nullable<string>;
+}
+
+export class LinkDocumentInput {
+    url?: Nullable<string>;
+    fileName?: Nullable<string>;
+    type?: Nullable<TypeDocument>;
+}
+
+export class CreateArticleInput {
+    title: string;
+    slug: string;
+    description?: Nullable<string>;
+    content?: Nullable<string>;
+    excerpt?: Nullable<string>;
+    thumbnail?: Nullable<LinkDocumentInput>;
+    coverImage?: Nullable<LinkDocumentInput>;
+    tags?: Nullable<string[]>;
+    categories?: Nullable<string[]>;
+    status?: Nullable<ArticleStatus>;
+    publishedAt?: Nullable<DateTime>;
+    author?: Nullable<string>;
+    readingTime?: Nullable<number>;
+    isFeatured?: Nullable<boolean>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateArticleInput {
+    title?: Nullable<string>;
+    slug?: Nullable<string>;
+    description?: Nullable<string>;
+    content?: Nullable<string>;
+    excerpt?: Nullable<string>;
+    thumbnail?: Nullable<LinkDocumentInput>;
+    coverImage?: Nullable<LinkDocumentInput>;
+    tags?: Nullable<string[]>;
+    categories?: Nullable<string[]>;
+    status?: Nullable<ArticleStatus>;
+    publishedAt?: Nullable<DateTime>;
+    author?: Nullable<string>;
+    readingTime?: Nullable<number>;
+    isFeatured?: Nullable<boolean>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
 }
 
 export class AddressInput {
@@ -125,6 +206,71 @@ export class QueryContentInput {
     sortOrder?: Nullable<string>;
 }
 
+export class CreateNavigationInput {
+    label: string;
+    href: string;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateNavigationInput {
+    label?: Nullable<string>;
+    href?: Nullable<string>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class ProjectLinkInput {
+    type: string;
+    url: string;
+    label?: Nullable<string>;
+}
+
+export class ProjectImageInput {
+    url?: Nullable<LinkDocumentInput>;
+    alt?: Nullable<string>;
+    isFeatured?: Nullable<boolean>;
+    order?: Nullable<number>;
+}
+
+export class CreateProjectInput {
+    title: string;
+    slug: string;
+    description?: Nullable<string>;
+    content?: Nullable<string>;
+    excerpt?: Nullable<string>;
+    thumbnail?: Nullable<LinkDocumentInput>;
+    images?: Nullable<ProjectImageInput[]>;
+    tags?: Nullable<string[]>;
+    technologies?: Nullable<string[]>;
+    links?: Nullable<ProjectLinkInput[]>;
+    status?: Nullable<ProjectStatus>;
+    startDate?: Nullable<DateTime>;
+    endDate?: Nullable<DateTime>;
+    isFeatured?: Nullable<boolean>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateProjectInput {
+    title?: Nullable<string>;
+    slug?: Nullable<string>;
+    description?: Nullable<string>;
+    content?: Nullable<string>;
+    excerpt?: Nullable<string>;
+    thumbnail?: Nullable<LinkDocumentInput>;
+    images?: Nullable<ProjectImageInput[]>;
+    tags?: Nullable<string[]>;
+    technologies?: Nullable<string[]>;
+    links?: Nullable<ProjectLinkInput[]>;
+    status?: Nullable<ProjectStatus>;
+    startDate?: Nullable<DateTime>;
+    endDate?: Nullable<DateTime>;
+    isFeatured?: Nullable<boolean>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
 export class CreateServiceInput {
     title: string;
     description: string;
@@ -163,6 +309,65 @@ export class UpdateSettingInput {
 export class BulkSettingInput {
     key: string;
     value: JSON;
+}
+
+export class SkillItemInput {
+    name: string;
+    order?: Nullable<number>;
+}
+
+export class CreateSkillInput {
+    title: string;
+    description?: Nullable<string>;
+    variant: SkillVariant;
+    items?: Nullable<SkillItemInput[]>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateSkillInput {
+    title?: Nullable<string>;
+    description?: Nullable<string>;
+    variant?: Nullable<SkillVariant>;
+    items?: Nullable<SkillItemInput[]>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class CreateSocialLinkInput {
+    platform: SocialPlatform;
+    label: string;
+    href: string;
+    icon?: Nullable<string>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateSocialLinkInput {
+    platform?: Nullable<SocialPlatform>;
+    label?: Nullable<string>;
+    href?: Nullable<string>;
+    icon?: Nullable<string>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class CreateTagInput {
+    name: string;
+    slug: string;
+    description?: Nullable<string>;
+    color?: Nullable<string>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateTagInput {
+    name?: Nullable<string>;
+    slug?: Nullable<string>;
+    description?: Nullable<string>;
+    color?: Nullable<string>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
 }
 
 export class CreateTeamMemberInput {
@@ -204,6 +409,28 @@ export class UpdateUserInput {
     isActive?: Nullable<boolean>;
 }
 
+export class CreateWorkExperienceInput {
+    period: string;
+    duration: string;
+    company: string;
+    position: string;
+    technologies: string;
+    isHighlighted?: Nullable<boolean>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
+export class UpdateWorkExperienceInput {
+    period?: Nullable<string>;
+    duration?: Nullable<string>;
+    company?: Nullable<string>;
+    position?: Nullable<string>;
+    technologies?: Nullable<string>;
+    isHighlighted?: Nullable<boolean>;
+    order?: Nullable<number>;
+    isActive?: Nullable<boolean>;
+}
+
 export class SocialLinks {
     __typename?: 'SocialLinks';
     linkedin?: Nullable<string>;
@@ -212,10 +439,23 @@ export class SocialLinks {
     facebook?: Nullable<string>;
 }
 
+export class LinkDocument {
+    __typename?: 'LinkDocument';
+    url?: Nullable<string>;
+    fileName?: Nullable<string>;
+    type?: Nullable<TypeDocument>;
+}
+
 export abstract class IQuery {
     __typename?: 'IQuery';
 
     abstract _empty(): Nullable<string> | Promise<Nullable<string>>;
+
+    abstract articles(isActive?: Nullable<boolean>, isFeatured?: Nullable<boolean>, status?: Nullable<ArticleStatus>): Article[] | Promise<Article[]>;
+
+    abstract article(id: string): Article | Promise<Article>;
+
+    abstract articleBySlug(slug: string): Article | Promise<Article>;
 
     abstract companies(): Company[] | Promise<Company[]>;
 
@@ -233,6 +473,16 @@ export abstract class IQuery {
 
     abstract contentBySlug(slug: string): Content | Promise<Content>;
 
+    abstract navigations(isActive?: Nullable<boolean>): Navigation[] | Promise<Navigation[]>;
+
+    abstract navigation(id: string): Navigation | Promise<Navigation>;
+
+    abstract projects(isActive?: Nullable<boolean>, isFeatured?: Nullable<boolean>, status?: Nullable<ProjectStatus>): Project[] | Promise<Project[]>;
+
+    abstract project(id: string): Project | Promise<Project>;
+
+    abstract projectBySlug(slug: string): Project | Promise<Project>;
+
     abstract services(isActive?: Nullable<boolean>): Service[] | Promise<Service[]>;
 
     abstract service(id: string): Service | Promise<Service>;
@@ -241,9 +491,23 @@ export abstract class IQuery {
 
     abstract setting(key: string): Setting | Promise<Setting>;
 
-    abstract publicSettings(): JSON | Promise<JSON>;
+    abstract getPublicSettings(): Setting[] | Promise<Setting[]>;
 
     abstract allSettingsAsObject(): JSON | Promise<JSON>;
+
+    abstract skills(isActive?: Nullable<boolean>): Skill[] | Promise<Skill[]>;
+
+    abstract skill(id: string): Skill | Promise<Skill>;
+
+    abstract socialLinks(isActive?: Nullable<boolean>): SocialLink[] | Promise<SocialLink[]>;
+
+    abstract socialLink(id: string): SocialLink | Promise<SocialLink>;
+
+    abstract tags(isActive?: Nullable<boolean>): Tag[] | Promise<Tag[]>;
+
+    abstract tag(id: string): Tag | Promise<Tag>;
+
+    abstract tagBySlug(slug: string): Tag | Promise<Tag>;
 
     abstract teamMembers(isActive?: Nullable<boolean>): TeamMember[] | Promise<TeamMember[]>;
 
@@ -254,12 +518,24 @@ export abstract class IQuery {
     abstract user(id: string): User | Promise<User>;
 
     abstract me(): User | Promise<User>;
+
+    abstract workExperiences(isActive?: Nullable<boolean>): WorkExperience[] | Promise<WorkExperience[]>;
+
+    abstract workExperience(id: string): WorkExperience | Promise<WorkExperience>;
 }
 
 export abstract class IMutation {
     __typename?: 'IMutation';
 
     abstract _empty(): Nullable<string> | Promise<Nullable<string>>;
+
+    abstract createArticle(input: CreateArticleInput): Article | Promise<Article>;
+
+    abstract updateArticle(id: string, input: UpdateArticleInput): Article | Promise<Article>;
+
+    abstract deleteArticle(id: string): boolean | Promise<boolean>;
+
+    abstract incrementArticleViews(id: string): Article | Promise<Article>;
 
     abstract createCompany(input: CreateCompanyInput): Company | Promise<Company>;
 
@@ -281,6 +557,18 @@ export abstract class IMutation {
 
     abstract bulkDeleteContents(ids: string[]): number | Promise<number>;
 
+    abstract createNavigation(input: CreateNavigationInput): Navigation | Promise<Navigation>;
+
+    abstract updateNavigation(id: string, input: UpdateNavigationInput): Navigation | Promise<Navigation>;
+
+    abstract deleteNavigation(id: string): boolean | Promise<boolean>;
+
+    abstract createProject(input: CreateProjectInput): Project | Promise<Project>;
+
+    abstract updateProject(id: string, input: UpdateProjectInput): Project | Promise<Project>;
+
+    abstract deleteProject(id: string): boolean | Promise<boolean>;
+
     abstract createService(input: CreateServiceInput): Service | Promise<Service>;
 
     abstract updateService(id: string, input: UpdateServiceInput): Service | Promise<Service>;
@@ -297,6 +585,24 @@ export abstract class IMutation {
 
     abstract initializeDefaultSettings(): boolean | Promise<boolean>;
 
+    abstract createSkill(input: CreateSkillInput): Skill | Promise<Skill>;
+
+    abstract updateSkill(id: string, input: UpdateSkillInput): Skill | Promise<Skill>;
+
+    abstract deleteSkill(id: string): boolean | Promise<boolean>;
+
+    abstract createSocialLink(input: CreateSocialLinkInput): SocialLink | Promise<SocialLink>;
+
+    abstract updateSocialLink(id: string, input: UpdateSocialLinkInput): SocialLink | Promise<SocialLink>;
+
+    abstract deleteSocialLink(id: string): boolean | Promise<boolean>;
+
+    abstract createTag(input: CreateTagInput): Tag | Promise<Tag>;
+
+    abstract updateTag(id: string, input: UpdateTagInput): Tag | Promise<Tag>;
+
+    abstract deleteTag(id: string): boolean | Promise<boolean>;
+
     abstract createTeamMember(input: CreateTeamMemberInput): TeamMember | Promise<TeamMember>;
 
     abstract updateTeamMember(id: string, input: UpdateTeamMemberInput): TeamMember | Promise<TeamMember>;
@@ -308,6 +614,36 @@ export abstract class IMutation {
     abstract updateUser(id: string, input: UpdateUserInput): User | Promise<User>;
 
     abstract deleteUser(id: string): boolean | Promise<boolean>;
+
+    abstract createWorkExperience(input: CreateWorkExperienceInput): WorkExperience | Promise<WorkExperience>;
+
+    abstract updateWorkExperience(id: string, input: UpdateWorkExperienceInput): WorkExperience | Promise<WorkExperience>;
+
+    abstract deleteWorkExperience(id: string): boolean | Promise<boolean>;
+}
+
+export class Article {
+    __typename?: 'Article';
+    _id: string;
+    title: string;
+    slug: string;
+    description?: Nullable<string>;
+    content?: Nullable<string>;
+    excerpt?: Nullable<string>;
+    thumbnail?: Nullable<LinkDocument>;
+    coverImage?: Nullable<LinkDocument>;
+    tags: string[];
+    categories: string[];
+    status: ArticleStatus;
+    publishedAt?: Nullable<DateTime>;
+    author?: Nullable<string>;
+    readingTime: number;
+    views: number;
+    isFeatured: boolean;
+    order: number;
+    isActive: boolean;
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export class Address {
@@ -388,6 +724,55 @@ export class PaginatedContent {
     totalPages: number;
 }
 
+export class Navigation {
+    __typename?: 'Navigation';
+    _id: string;
+    label: string;
+    href: string;
+    order: number;
+    isActive: boolean;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export class ProjectLink {
+    __typename?: 'ProjectLink';
+    type: string;
+    url: string;
+    label?: Nullable<string>;
+}
+
+export class ProjectImage {
+    __typename?: 'ProjectImage';
+    url?: Nullable<LinkDocument>;
+    alt?: Nullable<string>;
+    isFeatured: boolean;
+    order: number;
+}
+
+export class Project {
+    __typename?: 'Project';
+    _id: string;
+    title: string;
+    slug: string;
+    description?: Nullable<string>;
+    content?: Nullable<string>;
+    excerpt?: Nullable<string>;
+    thumbnail?: Nullable<LinkDocument>;
+    images: ProjectImage[];
+    tags: string[];
+    technologies: string[];
+    links: ProjectLink[];
+    status: ProjectStatus;
+    startDate?: Nullable<DateTime>;
+    endDate?: Nullable<DateTime>;
+    isFeatured: boolean;
+    order: number;
+    isActive: boolean;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
 export class Service {
     __typename?: 'Service';
     _id: string;
@@ -410,6 +795,52 @@ export class Setting {
     description?: Nullable<string>;
     type: string;
     isPublic: boolean;
+    isDefault?: Nullable<boolean>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export class SkillItem {
+    __typename?: 'SkillItem';
+    name: string;
+    order: number;
+}
+
+export class Skill {
+    __typename?: 'Skill';
+    _id: string;
+    title: string;
+    description?: Nullable<string>;
+    variant: SkillVariant;
+    items: SkillItem[];
+    order: number;
+    isActive: boolean;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export class SocialLink {
+    __typename?: 'SocialLink';
+    _id: string;
+    platform: SocialPlatform;
+    label: string;
+    href: string;
+    icon?: Nullable<string>;
+    order: number;
+    isActive: boolean;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export class Tag {
+    __typename?: 'Tag';
+    _id: string;
+    name: string;
+    slug: string;
+    description?: Nullable<string>;
+    color?: Nullable<string>;
+    order: number;
+    isActive: boolean;
     createdAt: DateTime;
     updatedAt: DateTime;
 }
@@ -436,6 +867,21 @@ export class User {
     email: string;
     name: string;
     role: string;
+    isActive: boolean;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export class WorkExperience {
+    __typename?: 'WorkExperience';
+    _id: string;
+    period: string;
+    duration: string;
+    company: string;
+    position: string;
+    technologies: string;
+    isHighlighted: boolean;
+    order: number;
     isActive: boolean;
     createdAt: DateTime;
     updatedAt: DateTime;

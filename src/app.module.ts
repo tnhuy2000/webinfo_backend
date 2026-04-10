@@ -13,10 +13,20 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ContentModule } from './modules/content/content.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { UploadModule } from './modules/upload/upload.module';
 import { DateScalar } from './common/scalars/date.scalar';
 import { JSONScalar } from './common/scalars/json.scalar';
 import { graphqlConfig } from './config/graphql.config';
 import databaseConfig from './config/database.config';
+
+// Portfolio Modules
+import { NavigationModule } from './modules/navigation/navigation.module';
+import { SocialLinkModule } from './modules/social-link/social-link.module';
+import { SkillModule } from './modules/skill/skill.module';
+import { WorkExperienceModule } from './modules/work-experience/work-experience.module';
+import { TagModule } from './modules/tag/tag.module';
+import { ProjectModule } from './modules/project/project.module';
+import { ArticleModule } from './modules/article/article.module';
 
 @Module({
   imports: [
@@ -37,7 +47,8 @@ import databaseConfig from './config/database.config';
     DatabaseModule,
 
     // REST API Modules
-    AuthModule,      // JWT Authentication
+    AuthModule, // JWT Authentication
+    UploadModule, // File Upload
 
     // CMS Modules (GraphQL - Schema First)
     UsersModule,
@@ -49,6 +60,15 @@ import databaseConfig from './config/database.config';
     ServicesModule,
     TeamModule,
     ContactModule,
+
+    // Portfolio Modules (GraphQL - Schema First)
+    NavigationModule,
+    SocialLinkModule,
+    SkillModule,
+    WorkExperienceModule,
+    TagModule,
+    ProjectModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar, JSONScalar],

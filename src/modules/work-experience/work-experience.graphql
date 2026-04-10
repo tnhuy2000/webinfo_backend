@@ -1,0 +1,48 @@
+# WorkExperience Module Schema
+
+type WorkExperience {
+  _id: ID!
+  period: String!
+  duration: String!
+  company: String!
+  position: String!
+  technologies: String!
+  isHighlighted: Boolean!
+  order: Int!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateWorkExperienceInput {
+  period: String!
+  duration: String!
+  company: String!
+  position: String!
+  technologies: String!
+  isHighlighted: Boolean
+  order: Int
+  isActive: Boolean
+}
+
+input UpdateWorkExperienceInput {
+  period: String
+  duration: String
+  company: String
+  position: String
+  technologies: String
+  isHighlighted: Boolean
+  order: Int
+  isActive: Boolean
+}
+
+extend type Query {
+  workExperiences(isActive: Boolean): [WorkExperience!]!
+  workExperience(id: ID!): WorkExperience!
+}
+
+extend type Mutation {
+  createWorkExperience(input: CreateWorkExperienceInput!): WorkExperience!
+  updateWorkExperience(id: ID!, input: UpdateWorkExperienceInput!): WorkExperience!
+  deleteWorkExperience(id: ID!): Boolean!
+}

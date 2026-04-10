@@ -1,0 +1,54 @@
+# SocialLink Module Schema
+
+enum SocialPlatform {
+  github
+  linkedin
+  telegram
+  facebook
+  instagram
+  twitter
+  youtube
+  email
+  other
+}
+
+type SocialLink {
+  _id: ID!
+  platform: SocialPlatform!
+  label: String!
+  href: String!
+  icon: String
+  order: Int!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateSocialLinkInput {
+  platform: SocialPlatform!
+  label: String!
+  href: String!
+  icon: String
+  order: Int
+  isActive: Boolean
+}
+
+input UpdateSocialLinkInput {
+  platform: SocialPlatform
+  label: String
+  href: String
+  icon: String
+  order: Int
+  isActive: Boolean
+}
+
+extend type Query {
+  socialLinks(isActive: Boolean): [SocialLink!]!
+  socialLink(id: ID!): SocialLink!
+}
+
+extend type Mutation {
+  createSocialLink(input: CreateSocialLinkInput!): SocialLink!
+  updateSocialLink(id: ID!, input: UpdateSocialLinkInput!): SocialLink!
+  deleteSocialLink(id: ID!): Boolean!
+}

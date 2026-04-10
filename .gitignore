@@ -1,7 +1,10 @@
 /dist
 /dist-webpack
 /node_modules
-/files
+/uploads
+
+# env files (can opt-in for committing if needed)
+.env
 
 # Logs
 logs

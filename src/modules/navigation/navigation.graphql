@@ -1,0 +1,36 @@
+# Navigation Module Schema
+
+type Navigation {
+  _id: ID!
+  label: String!
+  href: String!
+  order: Int!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input CreateNavigationInput {
+  label: String!
+  href: String!
+  order: Int
+  isActive: Boolean
+}
+
+input UpdateNavigationInput {
+  label: String
+  href: String
+  order: Int
+  isActive: Boolean
+}
+
+extend type Query {
+  navigations(isActive: Boolean): [Navigation!]!
+  navigation(id: ID!): Navigation!
+}
+
+extend type Mutation {
+  createNavigation(input: CreateNavigationInput!): Navigation!
+  updateNavigation(id: ID!, input: UpdateNavigationInput!): Navigation!
+  deleteNavigation(id: ID!): Boolean!
+}

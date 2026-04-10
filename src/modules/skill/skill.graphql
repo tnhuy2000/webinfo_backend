@@ -1,0 +1,59 @@
+# Skill Module Schema
+
+enum SkillVariant {
+  frontend
+  styles
+  backend
+  devops
+}
+
+type SkillItem {
+  name: String!
+  order: Int!
+}
+
+type Skill {
+  _id: ID!
+  title: String!
+  description: String
+  variant: SkillVariant!
+  items: [SkillItem!]!
+  order: Int!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input SkillItemInput {
+  name: String!
+  order: Int
+}
+
+input CreateSkillInput {
+  title: String!
+  description: String
+  variant: SkillVariant!
+  items: [SkillItemInput!]
+  order: Int
+  isActive: Boolean
+}
+
+input UpdateSkillInput {
+  title: String
+  description: String
+  variant: SkillVariant
+  items: [SkillItemInput!]
+  order: Int
+  isActive: Boolean
+}
+
+extend type Query {
+  skills(isActive: Boolean): [Skill!]!
+  skill(id: ID!): Skill!
+}
+
+extend type Mutation {
+  createSkill(input: CreateSkillInput!): Skill!
+  updateSkill(id: ID!, input: UpdateSkillInput!): Skill!
+  deleteSkill(id: ID!): Boolean!
+}

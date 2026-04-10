@@ -5,7 +5,8 @@ enum SettingCategory {
   SEO
   SOCIAL
   THEME
-  EMAIL
+  CONTACT
+  CONTENT
   ADVANCED
 }
 
@@ -17,6 +18,7 @@ type Setting {
   description: String
   type: String!
   isPublic: Boolean!
+  isDefault: Boolean
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -46,7 +48,7 @@ input BulkSettingInput {
 extend type Query {
   settings(category: SettingCategory): [Setting!]!
   setting(key: String!): Setting!
-  publicSettings: JSON!
+  getPublicSettings: [Setting!]!
   allSettingsAsObject: JSON!
 }
 

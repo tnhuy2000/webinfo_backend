@@ -1,17 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { DATABASE_COLLECTION_NAME } from '../../../constant';
+import { SettingCategory } from 'src/graphql.schema';
 
 export type SettingDocument = Setting & Document;
 
-export enum SettingCategory {
-  GENERAL = 'general',
-  SEO = 'seo',
-  SOCIAL = 'social',
-  THEME = 'theme',
-  EMAIL = 'email',
-  ADVANCED = 'advanced',
-}
 
 @Schema({
   timestamps: true,
@@ -35,6 +28,9 @@ export class Setting {
 
   @Prop({ type: Boolean, default: true })
   isPublic: boolean;
+
+  @Prop({ type: Boolean, default: false })
+  isDefault: boolean; // System default settings cannot be deleted
 }
 
 export const SettingSchema = SchemaFactory.createForClass(Setting);
