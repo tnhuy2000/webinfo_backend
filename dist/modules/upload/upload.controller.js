@@ -17,25 +17,43 @@ const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const upload_service_1 = require("./upload.service");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
+const cloudinary_service_1 = require("../cloudinary/cloudinary.service");
 let UploadController = class UploadController {
     uploadService;
-    constructor(uploadService) {
+    cloudinaryService;
+    constructor(uploadService, cloudinaryService) {
         this.uploadService = uploadService;
+        this.cloudinaryService = cloudinaryService;
     }
-    uploadFile(file) {
+    async uploadFile(file) {
         if (!file) {
             throw new common_1.BadRequestException('No file uploaded');
         }
-        return this.uploadService.processUpload(file);
+        console.log('file', file);
+        const result = await this.cloudinaryService.uploadFile(file, 'documents');
+        return {
+            success: true,
+            message: 'Upload sucessfully',
+            url: result.secure_url,
+            public_id: result.public_id,
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: file.size,
+        };
     }
-    uploadImage(file) {
+    async uploadImage(file) {
         if (!file) {
             throw new common_1.BadRequestException('No file uploaded');
         }
         if (!file.mimetype.startsWith('image/')) {
             throw new common_1.BadRequestException('Only image files are allowed');
         }
-        return this.uploadService.processUpload(file);
+        const result = await this.cloudinaryService.uploadFile(file, 'products');
+        return {
+            message: 'Upload sucessfully',
+            url: result.secure_url,
+            public_id: result.public_id,
+        };
     }
     uploadDocument(file) {
         if (!file) {
@@ -52,7 +70,7 @@ __decorate([
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UploadController.prototype, "uploadFile", null);
 __decorate([
     (0, common_1.Post)('image'),
@@ -61,7 +79,7 @@ __decorate([
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UploadController.prototype, "uploadImage", null);
 __decorate([
     (0, common_1.Post)('document'),
@@ -74,6 +92,7 @@ __decorate([
 ], UploadController.prototype, "uploadDocument", null);
 exports.UploadController = UploadController = __decorate([
     (0, common_1.Controller)('upload'),
-    __metadata("design:paramtypes", [upload_service_1.UploadService])
+    __metadata("design:paramtypes", [upload_service_1.UploadService,
+        cloudinary_service_1.CloudinaryService])
 ], UploadController);
 //# sourceMappingURL=upload.controller.js.map

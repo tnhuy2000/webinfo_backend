@@ -3,6 +3,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { LoggingInterceptor } from './modules/interceptor/logging.interceptor';
 
 const logger = new Logger('Main');
 async function bootstrap() {
@@ -27,10 +28,12 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.useGlobalInterceptors(new LoggingInterceptor())
 
   const port = process.env.PORT || 3001;
+  const baseUrl = process.env.BASE_URL || `http://localhost:${port}/graphql`;
   await app.listen(port);
-  console.log(`🚀 Server is running on http://localhost:${port}/graphql`);
+  console.log(`🚀 Server is running on ${baseUrl}`);
   logger.debug('App is listening on port ' + port);
 }
 bootstrap();

@@ -577,7 +577,7 @@ export abstract class IMutation {
 
     abstract createSetting(input: CreateSettingInput): Setting | Promise<Setting>;
 
-    abstract updateSetting(key: string, input: UpdateSettingInput): Setting | Promise<Setting>;
+    abstract updateSetting(key: string, input?: Nullable<UpdateSettingInput>): Setting | Promise<Setting>;
 
     abstract bulkUpdateSettings(settings: BulkSettingInput[]): number | Promise<number>;
 

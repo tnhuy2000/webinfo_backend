@@ -457,7 +457,7 @@ export declare abstract class IMutation {
     abstract updateService(id: string, input: UpdateServiceInput): Service | Promise<Service>;
     abstract removeService(id: string): boolean | Promise<boolean>;
     abstract createSetting(input: CreateSettingInput): Setting | Promise<Setting>;
-    abstract updateSetting(key: string, input: UpdateSettingInput): Setting | Promise<Setting>;
+    abstract updateSetting(key: string, input?: Nullable<UpdateSettingInput>): Setting | Promise<Setting>;
     abstract bulkUpdateSettings(settings: BulkSettingInput[]): number | Promise<number>;
     abstract deleteSetting(key: string): boolean | Promise<boolean>;
     abstract initializeDefaultSettings(): boolean | Promise<boolean>;

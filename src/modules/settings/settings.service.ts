@@ -72,15 +72,14 @@ export class SettingsService {
     // If setting is default, only allow updating the value
     if (existingSetting.isDefault) {
       // Check if trying to update fields other than value
-      const forbiddenFields = Object.keys(updateSettingDto).filter(
-        field => field !== 'value'
-      );
-
-      if (forbiddenFields.length > 0) {
-        throw new BadRequestException(
-          `Cannot modify ${forbiddenFields.join(', ')} of default system settings. Only 'value' can be updated.`
-        );
-      }
+      // const forbiddenFields = Object.keys(updateSettingDto).filter(
+      //   field => field !== 'value'
+      // );
+      // if (forbiddenFields.length > 0) {
+      //   throw new BadRequestException(
+      //     `Cannot modify ${forbiddenFields.join(', ')} of default system settings. Only 'value' can be updated.`
+      //   );
+      // }
 
       // Only update value
       const setting = await this.settingModel

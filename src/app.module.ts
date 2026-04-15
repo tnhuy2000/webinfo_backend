@@ -27,7 +27,7 @@ import { WorkExperienceModule } from './modules/work-experience/work-experience.
 import { TagModule } from './modules/tag/tag.module';
 import { ProjectModule } from './modules/project/project.module';
 import { ArticleModule } from './modules/article/article.module';
-
+import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 @Module({
   imports: [
     // Config Module
@@ -69,6 +69,7 @@ import { ArticleModule } from './modules/article/article.module';
     TagModule,
     ProjectModule,
     ArticleModule,
+    CloudinaryModule
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar, JSONScalar],

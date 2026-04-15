@@ -54,7 +54,7 @@ extend type Query {
 
 extend type Mutation {
   createSetting(input: CreateSettingInput!): Setting!
-  updateSetting(key: String!, input: UpdateSettingInput!): Setting!
+  updateSetting(key: String!, input: UpdateSettingInput): Setting!
   bulkUpdateSettings(settings: [BulkSettingInput!]!): Int!
   deleteSetting(key: String!): Boolean!
   initializeDefaultSettings: Boolean!

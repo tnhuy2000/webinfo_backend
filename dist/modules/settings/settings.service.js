@@ -64,10 +64,6 @@ let SettingsService = class SettingsService {
             throw new common_1.NotFoundException('Setting not found');
         }
         if (existingSetting.isDefault) {
-            const forbiddenFields = Object.keys(updateSettingDto).filter(field => field !== 'value');
-            if (forbiddenFields.length > 0) {
-                throw new common_1.BadRequestException(`Cannot modify ${forbiddenFields.join(', ')} of default system settings. Only 'value' can be updated.`);
-            }
             const setting = await this.settingModel
                 .findOneAndUpdate({ key }, { value: updateSettingDto.value }, { new: true })
                 .exec();

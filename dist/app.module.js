@@ -37,6 +37,7 @@ const work_experience_module_1 = require("./modules/work-experience/work-experie
 const tag_module_1 = require("./modules/tag/tag.module");
 const project_module_1 = require("./modules/project/project.module");
 const article_module_1 = require("./modules/article/article.module");
+const cloudinary_module_1 = require("./modules/cloudinary/cloudinary.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -69,6 +70,7 @@ exports.AppModule = AppModule = __decorate([
             tag_module_1.TagModule,
             project_module_1.ProjectModule,
             article_module_1.ArticleModule,
+            cloudinary_module_1.CloudinaryModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, date_scalar_1.DateScalar, json_scalar_1.JSONScalar],
