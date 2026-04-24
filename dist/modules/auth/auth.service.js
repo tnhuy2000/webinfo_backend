@@ -97,7 +97,17 @@ let AuthService = class AuthService {
             },
         };
     }
-    async refreshTokens(userId, refreshToken) {
+    async refreshTokens(refreshToken) {
+        let userId;
+        try {
+            const payload = this.jwtService.verify(refreshToken, {
+                secret: this.configService.get('JWT_REFRESH_SECRET') || 'your-refresh-secret-key',
+            });
+            userId = payload.sub;
+        }
+        catch {
+            throw new common_1.UnauthorizedException('Invalid refresh token');
+        }
         const user = await this.usersService.findById(userId);
         if (!user) {
             throw new common_1.UnauthorizedException('Access denied');

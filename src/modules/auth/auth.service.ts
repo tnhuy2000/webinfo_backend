@@ -30,7 +30,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async register(registerDto: RegisterDto): Promise<AuthResponse> {
     const { email, password, name } = registerDto;
@@ -98,7 +98,16 @@ export class AuthService {
     };
   }
 
-  async refreshTokens(userId: string, refreshToken: string): Promise<AuthTokens> {
+  async refreshTokens(refreshToken: string): Promise<AuthTokens> {
+    let userId: string;
+    try {
+      const payload = this.jwtService.verify(refreshToken, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET') || 'your-refresh-secret-key',
+      });
+      userId = payload.sub;
+    } catch {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
     const user = await this.usersService.findById(userId);
     if (!user) {
       throw new UnauthorizedException('Access denied');

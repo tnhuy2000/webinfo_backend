@@ -22,7 +22,7 @@ export declare class AuthService {
     constructor(usersService: UsersService, jwtService: JwtService, configService: ConfigService);
     register(registerDto: RegisterDto): Promise<AuthResponse>;
     login(loginDto: LoginDto): Promise<AuthResponse>;
-    refreshTokens(userId: string, refreshToken: string): Promise<AuthTokens>;
+    refreshTokens(refreshToken: string): Promise<AuthTokens>;
     logout(userId: string): Promise<void>;
     private generateTokens;
 }

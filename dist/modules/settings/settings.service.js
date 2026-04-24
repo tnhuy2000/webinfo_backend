@@ -104,7 +104,7 @@ let SettingsService = class SettingsService {
                 category: graphql_schema_1.SettingCategory.GENERAL,
                 description: 'Admin panel logo',
                 type: 'IMAGE',
-                isPublic: false,
+                isPublic: true,
                 isDefault: true,
             },
             {

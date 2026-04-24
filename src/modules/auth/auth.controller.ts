@@ -34,7 +34,6 @@ export class AuthController {
   @UseGuards(JwtRefreshAuthGuard)
   async refresh(@Body() refreshTokenDto: RefreshTokenDto, @Request() req: any) {
     return this.authService.refreshTokens(
-      req.user.userId,
       refreshTokenDto.refreshToken,
     );
   }

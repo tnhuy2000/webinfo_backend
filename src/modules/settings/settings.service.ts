@@ -140,7 +140,7 @@ export class SettingsService {
         category: SettingCategory.GENERAL,
         description: 'Admin panel logo',
         type: 'IMAGE',
-        isPublic: false,
+        isPublic: true,
         isDefault: true,
       },
       {

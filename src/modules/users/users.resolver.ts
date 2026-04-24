@@ -6,7 +6,7 @@ import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 @Resolver('User')
 @UseGuards(GqlAuthGuard)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Query('users')
   async getUsers() {
